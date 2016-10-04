@@ -20,7 +20,31 @@ Queries should be sent as `GET` requests, and the query's route should always be
 
 `/.well-know/identity/query/`*`MusicComposition`*
 
-The object type appear in Schema.org with PascalCased names (as opposed to camelCased), but Query API implementations shall be case *insensitive*. Regardless of pluralization of a Schema.org object type's name, requests for a type will always return an array of all objects of that type via the response object's `data` property.
+The object type appear in Schema.org with PascalCased names (as opposed to camelCased), but Query API implementations shall be case *insensitive*. Regardless of pluralization of a Schema.org object type's name, requests for a type will always return an array of all objects of that type via the response object's `data` property, as shown here:
+
+```json
+{
+  "links": {
+    "self": "/.well-know/identity/query/MusicComposition"
+  },
+  "data": [{
+    "@context": "http://schema.org",
+    "@type": "MusicRecording",
+    "@id": "http://musicbrainz.org/recording/3566e453-8f10-4a45-ac85-2c72eb183ca1",
+    "name": "Back in the U.S.S.R.",
+    "producer": {
+        "@type": "Person",
+        "name": "George Martin"
+    },
+    "duration": "PT2M43S",
+    "recordingOf": {
+        "@type": "MusicComposition",
+        "name": "Back in the U.S.S.R",
+        "iswcCode": "T-010.140.236-1"
+    }
+  }]
+}
+```
 
 #### Query Filters
 
