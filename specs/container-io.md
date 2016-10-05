@@ -14,18 +14,18 @@ The owning entity's primary descriptor object shall reside at the path `/.well-k
 
 To maximize reuse of existing standards and open source projects, The Query API is an implementation of the common [JSON API specification's][2773b365] request, response, and query formats, that relies on Schema.org's data ontology to define a standard set of types, parameter values, and response objects.
 
-The Query API shall be accessible at the following path `/.well-know/identity/query`, and should follow the request format specified by the JSON API documentation here: http://jsonapi.org/format/#fetching. Note: the `Accept` type for requests should be set to `application/vnd.api+json`.
+The Query API shall be accessible at the following path `/.well-know/identity/query/v0.1`, and should follow the request format specified by the JSON API documentation here: http://jsonapi.org/format/#fetching. Note: the `Accept` type for requests should be set to `application/vnd.api+json`.
 
 Queries should be sent as `GET` requests, and the query's route should always be a Schema.org object type, for example:
 
-`/.well-know/identity/query/`*`MusicPlaylist`*
+`/.well-know/identity/query/v0.1/`*`MusicPlaylist`*
 
 The object type appear in Schema.org with PascalCased names (as opposed to camelCased), but Query API implementations shall be case *insensitive*. Regardless of pluralization of a Schema.org object type's name, requests for a type will always return an array of all objects of that type via the response object's `data` property, as shown here:
 
 ```json
 {
   "links": {
-    "self": "/.well-know/identity/query/MusicPlaylist"
+    "self": "/.well-know/identity/query/v0.1/MusicPlaylist"
   },
   "data": [{
   "@context": "http://schema.org",
@@ -38,7 +38,7 @@ The object type appear in Schema.org with PascalCased names (as opposed to camel
       "duration": "PT4M45S",
       "inAlbum": "Second Helping",
       "name": "Sweet Home Alabama",
-      "permit": "/.well-know/identity/query/Permit/sweet-home-alabama"
+      "permit": "/.well-know/identity/query/v0.1/Permit/sweet-home-alabama"
     },
     {
       "@type": "MusicRecording",
@@ -46,7 +46,7 @@ The object type appear in Schema.org with PascalCased names (as opposed to camel
       "duration": "PT3M12S",
       "inAlbum": "Stranger In Town",
       "name": "Old Time Rock and Roll",
-      "permit": "/.well-know/identity/query/Permit/old-time-rock-and-roll"
+      "permit": "/.well-know/identity/query/v0.1/Permit/old-time-rock-and-roll"
     }]
   }]
 }
@@ -54,7 +54,7 @@ The object type appear in Schema.org with PascalCased names (as opposed to camel
 
 #### Query Filters
 
-The following are the minimum set of supported filters for an identity container implementation to pass validation and be recognized as conforming:
+The following are the minimum set of supported filters for an identity container implementation to pass validation and be recognized as conforming to version 0.1 of the API:
 
 ...TBD...
 
