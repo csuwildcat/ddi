@@ -52,11 +52,11 @@ The object type appear in Schema.org with PascalCased names (as opposed to camel
 }
 ```
 
-#### Query Filters
+#### Query Syntax
 
-The following are the minimum set of supported filters for an identity container implementation to pass validation and be recognized as conforming to version 0.1 of the API:
+While the Identity Container spec does not mandate a specific search solution, for the purposes of interoperability and developer access, containers must accept a common search and filtering syntax. The syntax we have selected is Apache Lucene's Query Parser Syntax. There are many libraries that can translate the syntax for querying different underlying search solutions, like Solr, Elastic Search, etc.
 
-...TBD...
+Please be sure to test your container implementations against the test harness to ensure it passes validation and is recognized as conforms to the requirements of the Identity Container spec.
 
 
   [13f07ee0]: https://tools.ietf.org/html/rfc5785 "IETF well-know URIs"
