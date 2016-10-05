@@ -4,7 +4,7 @@ In order to maximize data interoperability and accessibility between identity co
 
 ## Well-Known URI
 
-The following API leverages the existing IETF convention for accessing resources that predictably reside at well known locations, as detailed in [RFC 5785 well-know URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-know` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-know/identity`.
+To enable both identity containers and existing severs of Web content to interact with the world of identity via the Identity Container APIs, we are using the IETF convention for globally defined resources that predictably reside at well known locations, as detailed in [RFC 5785 well-know URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-know` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-know/identity`.
 
 ## Primary Identity Object
 
