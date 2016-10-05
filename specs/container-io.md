@@ -54,7 +54,7 @@ The object type appear in Schema.org with PascalCased names (as opposed to camel
 
 #### Query Syntax
 
-While the Identity Container spec does not mandate a specific search solution, for the purposes of interoperability and developer access, containers must accept a common search and filtering syntax. The syntax we have selected is Apache Lucene's Query Parser Syntax. There are many libraries that can translate the syntax for querying different underlying search solutions, like Solr, Elastic Search, etc.
+While the Identity Container spec does not mandate a specific storage solution, for the purposes of interoperability and developer access, containers must accept a common search and filtering syntax regardless of the underlying implementation.
 
 Please be sure to test your container implementations against the test harness to ensure it passes validation and is recognized as conforms to the requirements of the Identity Container spec.
 
