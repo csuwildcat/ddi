@@ -34,7 +34,7 @@ The object type appear in Schema.org with PascalCased names (as opposed to camel
   "numTracks": "2",
   "track": [{
       "@type": "MusicRecording",
-      "byArtist": "Lynard Skynard",
+      "byArtist": "Lynard Skynyrd",
       "duration": "PT4M45S",
       "inAlbum": "Second Helping",
       "name": "Sweet Home Alabama",
@@ -54,7 +54,7 @@ The object type appear in Schema.org with PascalCased names (as opposed to camel
 
 #### Query Syntax
 
-While the Identity Container spec does not mandate a specific storage solution, for the purposes of interoperability and developer access, containers must accept a common search and filtering syntax regardless of the underlying implementation.
+While the Identity Container spec does not mandate specific storage and search solutions, but for the purposes of interoperability and developer ergonomics containers must accept a common search and filtering syntax regardless of the underlying implementation.
 
 Please be sure to test your container implementations against the test harness to ensure it passes validation and is recognized as conforms to the requirements of the Identity Container spec.
 
