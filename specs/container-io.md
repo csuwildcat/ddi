@@ -6,26 +6,36 @@ In order to maximize data interoperability and accessibility between identity co
 
 To enable both identity containers and existing severs of Web content to interact with the world of identity via the Identity Container APIs, we are using the IETF convention for globally defined resources that predictably reside at well known locations, as detailed in [RFC 5785 well-know URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-know` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-know/identity`.
 
-## Primary Identity Object
+## REST API
 
-The owning entity's primary descriptor object shall reside at the path `/.well-know/identity/profile`, and should return whatever Schema.org object type best represents the entity.
+To maximize reuse of existing standards and open source projects, The REST API is an implementation of the common [JSON API specification's][2773b365] request, response, and query formats, that relies on Schema.org's data ontology to define a standard set of types, parameter values, and response objects. Requests should be formatted in accordance with the JSON API documentation: http://jsonapi.org/format/#fetching. Note: the `Accept` header parameter for requests should be set to `application/vnd.api+json`.
 
-## Query API
+#### Data Paths
 
-To maximize reuse of existing standards and open source projects, The Query API is an implementation of the common [JSON API specification's][2773b365] request, response, and query formats, that relies on Schema.org's data ontology to define a standard set of types, parameter values, and response objects.
+One universal object you can expect nearly every container to have is a `profile`. This is the owning entity's primary descriptor object, and resides at the path `/.well-know/identity/profile`. The object should be encoded in the format of whatever Schema.org type best represents the entity.
 
-The Query API shall be accessible at the following path `/.well-know/identity/query/v0.1`, and should follow the request format specified by the JSON API documentation here: http://jsonapi.org/format/#fetching. Note: the `Accept` type for requests should be set to `application/vnd.api+json`.
+The full scope of an identity's data is accessible via the following path `/.well-know/identity/data`, wherein the path structure is a flat map of object type names that is a 1:1 mirror of Schema.org's structured data schema. The names of the types are `PascalCased` on Schema.org, but container implementations should be *case insensitive*. Here are a few examples of actual paths and the type of Schema.org objects they will respond with:
 
-Queries should be sent as `GET` requests, and the query's route should always be a Schema.org object type, for example:
+`/.well-know/identity/data/event` --> http://schema.org/Event
 
-`/.well-know/identity/query/v0.1/`*`MusicPlaylist`*
+`/.well-know/identity/data/invoice` --> http://schema.org/Invoice
 
-The object type appear in Schema.org with PascalCased names (as opposed to camelCased), but Query API implementations shall be case *insensitive*. Regardless of pluralization of a Schema.org object type's name, requests for a type will always return an array of all objects of that type via the response object's `data` property, as shown here:
+`/.well-know/identity/data/photograph` --> http://schema.org/Photograph
+
+The intent is to provide a known path for accessing standardized, semantic objects reliably across all containers, but do so in way that asserts as little opinion as possible. While deeper path taxonomies are helpful for some use-cases, we feel a path taxonomy is best left as a UI layer User Agents, apps, and services can overlay at their discretion.
+
+#### Example Request
+
+Requests should be sent as `GET`, and the query's route should follow the common Identity Container Taxonomy. Here is an example of how to request an identity's music playlists:
+
+`/.well-know/identity/data/`*`musicplaylist`*
+
+Requests will always return an array of all objects of the related Schema.org type, via the response object's `data` property, as shown here:
 
 ```json
 {
   "links": {
-    "self": "/.well-know/identity/query/v0.1/MusicPlaylist"
+    "self": "/.well-know/identity/data/musicplaylist"
   },
   "data": [{
   "@context": "http://schema.org",
@@ -38,7 +48,7 @@ The object type appear in Schema.org with PascalCased names (as opposed to camel
       "duration": "PT4M45S",
       "inAlbum": "Second Helping",
       "name": "Sweet Home Alabama",
-      "permit": "/.well-know/identity/query/v0.1/Permit/sweet-home-alabama"
+      "permit": "/.well-know/identity/data/permit/ced043360b99"
     },
     {
       "@type": "MusicRecording",
@@ -46,7 +56,7 @@ The object type appear in Schema.org with PascalCased names (as opposed to camel
       "duration": "PT3M12S",
       "inAlbum": "Stranger In Town",
       "name": "Old Time Rock and Roll",
-      "permit": "/.well-know/identity/query/v0.1/Permit/old-time-rock-and-roll"
+      "permit": "/.well-know/identity/data/permit/aa9f3ac9eb7a"
     }]
   }]
 }
