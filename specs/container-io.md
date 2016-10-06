@@ -6,6 +6,10 @@ In order to maximize data interoperability and accessibility between identity co
 
 To enable both identity containers and existing severs of Web content to interact with the world of identity via the Identity Container APIs, we are using the IETF convention for globally defined resources that predictably reside at well known locations, as detailed in [RFC 5785 well-know URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-know` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-know/identity`.
 
+## Access Control
+
+In the following section, we'll explore how to access data in containers using a common REST API, but it is important to note that all requests for identity data are subject to the permissions established by the owning entity. These permissions are declared in an Access Control Schema, which you can read more about in the related documentation here:
+
 ## REST API
 
 To maximize reuse of existing standards and open source projects, The REST API is an implementation of the common [JSON API specification's][2773b365] request, response, and query formats, that relies on Schema.org's data ontology to define a standard set of types, parameter values, and response objects. Requests should be formatted in accordance with the JSON API documentation: http://jsonapi.org/format/#fetching. Note: the `Accept` header parameter for requests should be set to `application/vnd.api+json`.
@@ -30,7 +34,7 @@ Requests should be sent as `GET`, and the query's route should follow the common
 
 `/.well-know/identity/data/`*`musicplaylist`*
 
-Requests will always return an array of all objects of the related Schema.org type, via the response object's `data` property, as shown here:
+Requests will always return an array of all objects - *the user has given you access to* - of the related Schema.org type, via the response object's `data` property, as shown here:
 
 ```json
 {
