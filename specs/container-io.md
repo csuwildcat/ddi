@@ -4,19 +4,19 @@ In order to maximize data interoperability and accessibility between identity co
 
 ## Well-Known URI
 
-To enable both identity containers and existing severs of Web content to interact with the world of identity via the Identity Container APIs, we are using the IETF convention for globally defined resources that predictably reside at well known locations, as detailed in [RFC 5785 well-know URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-know` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-know/identity`.
+To enable both identity containers and existing severs of Web content to interact with the world of identity via the Identity Container APIs, we are using the IETF convention for globally defined resources that predictably reside at well known locations, as detailed in [RFC 5785 well-known URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-known` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-known/identity`.
 
 ## API Routes
 
 There are a handful of default, top-level endpoints that have defined meaning within the system, those are:
 
-  `/.well-know/identity/`*`profile`* ➜ The owning entity's primary descriptor object
+  `/.well-known/identity/`*`profile`* ➜ The owning entity's primary descriptor object
 
-  `/.well-know/identity/`*`permissions`* ➜ The access control JSON document
+  `/.well-known/identity/`*`permissions`* ➜ The access control JSON document
 
-  `/.well-know/identity/`*`connections`* ➜ Scoped storage space for permitted external entities
+  `/.well-known/identity/`*`connections`* ➜ Scoped storage space for permitted external entities
 
-  `/.well-know/identity/`*`data`* ➜ The owning entity's identity data (access limited)
+  `/.well-known/identity/`*`data`* ➜ The owning entity's identity data (access limited)
 
 #### The Profile Object
 
@@ -48,17 +48,17 @@ All access and manipulation of identity data is subject to the permissions estab
 
 Connections are other entities that are given permission to create, read, update, or delete identity data, as well as subscribe to a number of callback hooks. Connections are given an addressable data space within the owning identity's container under the `connections` top-level path, accessible within that path based on the entity's decentralize identifier or a recognized public key. Here's an example of the path format:
 
-`/.well-know/identity/connections/`*`ENTITY_ID_OR_PUBLIC_KEY`*
+`/.well-known/identity/connections/`*`ENTITY_ID_OR_PUBLIC_KEY`*
 
 #### Data
 
-The full scope of an identity's data is accessible via the following path `/.well-know/identity/data`, wherein the path structure is a flat map of object type names that is a 1:1 mirror of Schema.org's structured data schema. The names of the types are `PascalCased` on Schema.org, but container implementations should be *case insensitive*. Here are a few examples of actual paths and the type of Schema.org objects they will respond with:
+The full scope of an identity's data is accessible via the following path `/.well-known/identity/data`, wherein the path structure is a flat map of object type names that is a 1:1 mirror of Schema.org's structured data schema. The names of the types are `PascalCased` on Schema.org, but container implementations should be *case insensitive*. Here are a few examples of actual paths and the type of Schema.org objects they will respond with:
 
-`/.well-know/identity/data/Event` ➜ http://schema.org/Event
+`/.well-known/identity/data/Event` ➜ http://schema.org/Event
 
-`/.well-know/identity/data/Invoice` ➜ http://schema.org/Invoice
+`/.well-known/identity/data/Invoice` ➜ http://schema.org/Invoice
 
-`/.well-know/identity/data/Photograph` ➜ http://schema.org/Photograph
+`/.well-known/identity/data/Photograph` ➜ http://schema.org/Photograph
 
 The intent is to provide a known path for accessing standardized, semantic objects reliably across all containers, but do so in way that asserts as little opinion as possible. While deeper path taxonomies are helpful for some use-cases, we feel a path taxonomy is best left as a UI layer User Agents, apps, and services can overlay at their discretion.
 
@@ -77,7 +77,7 @@ Requests will always return an array of all objects - *the user has given you ac
 ```json
 {
   "links": {
-    "self": "/.well-know/identity/data/musicplaylist"
+    "self": "/.well-known/identity/data/musicplaylist"
   },
   "data": [{
   "@context": "http://schema.org",
@@ -90,7 +90,7 @@ Requests will always return an array of all objects - *the user has given you ac
       "duration": "PT4M45S",
       "inAlbum": "Second Helping",
       "name": "Sweet Home Alabama",
-      "permit": "/.well-know/identity/data/permit/ced043360b99"
+      "permit": "/.well-known/identity/data/permit/ced043360b99"
     },
     {
       "@type": "MusicRecording",
@@ -98,7 +98,7 @@ Requests will always return an array of all objects - *the user has given you ac
       "duration": "PT3M12S",
       "inAlbum": "Stranger In Town",
       "name": "Old Time Rock and Roll",
-      "permit": "/.well-know/identity/data/permit/aa9f3ac9eb7a"
+      "permit": "/.well-known/identity/data/permit/aa9f3ac9eb7a"
     }]
   }]
 }
