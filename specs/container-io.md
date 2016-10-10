@@ -34,7 +34,9 @@ All access and manipulation of identity data is subject to the permissions estab
 
 #### Connections
 
-Connections can request permission to create, read, update, or delete identity data. Conne
+Connections are other entities that are given permission to create, read, update, or delete identity data, as well as subscribe to a number of callback hooks. Connections are given an addressable data space within the owning identity's container under the `connections` top-level path, accessible within that path based on the entity's decentralize identifier or a recognized public key. Here's an example of the path format:
+
+`/.well-know/identity/connections/`*`ENTITY_ID_OR_PUBLIC_KEY`*
 
 #### Data
 
