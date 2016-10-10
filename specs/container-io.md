@@ -31,7 +31,6 @@ One universal object you can expect nearly every container to have is a `profile
       {
         "@type": "WebSite",
         "url": "http://www.backalleycoder.com/"
-
       }
     ],
     "address": {
