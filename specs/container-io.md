@@ -1,38 +1,62 @@
 # Identity Container I/O
 
-In order to maximize data interoperability and accessibility between identity containers, and other systems that will consume identity data (crawlers, apps, etc.), it is important to create a globally recognized API based on a recognized query format that explicitly maps to semantic, expected data objects.
+In order to maximize data interoperability and accessibility between identity containers, and other systems that will interact with identity data (crawlers, apps, etc.), it is important to create a globally recognized API based on a recognized query format that explicitly maps to semantic, expected data objects.
 
 ## Well-Known URI
 
 To enable both identity containers and existing severs of Web content to interact with the world of identity via the Identity Container APIs, we are using the IETF convention for globally defined resources that predictably reside at well known locations, as detailed in [RFC 5785 well-know URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-know` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-know/identity`.
 
-## Access Control
+## API Routes
 
-In the following section, we'll explore how to access data in containers using a common REST API, but it is important to note that all requests for identity data are subject to the permissions established by the owning entity. These permissions are declared in an Access Control Schema, which you can read more about in the related documentation here:
+There are a handful of default, top-level endpoints that have defined meaning within the system, those are:
 
-## REST API
+  `/.well-know/identity/`*`profile`* ➜ The owning entity's primary descriptor object
 
-To maximize reuse of existing standards and open source projects, The REST API is an implementation of the common [JSON API specification's][2773b365] request, response, and query formats, that relies on Schema.org's data ontology to define a standard set of types, parameter values, and response objects. Requests should be formatted in accordance with the JSON API documentation: http://jsonapi.org/format/#fetching. Note: the `Accept` header parameter for requests should be set to `application/vnd.api+json`.
+  `/.well-know/identity/`*`permissions`* ➜ The access control JSON document
 
-#### Data Paths
+  `/.well-know/identity/`*`connections`* ➜ Scoped storage space for permitted external entities
 
-One universal object you can expect nearly every container to have is a `profile`. This is the owning entity's primary descriptor object, and resides at the path `/.well-know/identity/profile`. The object should be encoded in the format of whatever Schema.org type best represents the entity.
+  `/.well-know/identity/`*`data`* ➜ The owning entity's identity data (access limited)
+
+#### The Profile Object
+
+One universal object you can expect nearly every container to have is a `profile`. This is the owning entity's primary descriptor object. The object should be encoded in the format of whatever Schema.org type best represents the entity. Here is an example of an identity that represents a human being:
+
+```json
+{
+  "type": "@Person"
+}
+```
+
+#### Permissions
+
+All access and manipulation of identity data is subject to the permissions established by the owning entity. These permissions are declared in a JSON Document, which you can read more about in the documentation here: TBD. This access control document dictates what data the owning entity publicly exposes, as well as the permissions for Connections the entity creates with other entities across the web of identity, whether they are humans, apps, services, devices, etc.
+
+#### Connections
+
+Connections can request permission to create, read, update, or delete identity data. Conne
+
+#### Data
 
 The full scope of an identity's data is accessible via the following path `/.well-know/identity/data`, wherein the path structure is a flat map of object type names that is a 1:1 mirror of Schema.org's structured data schema. The names of the types are `PascalCased` on Schema.org, but container implementations should be *case insensitive*. Here are a few examples of actual paths and the type of Schema.org objects they will respond with:
 
-`/.well-know/identity/data/event` --> http://schema.org/Event
+`/.well-know/identity/data/Event` ➜ http://schema.org/Event
 
-`/.well-know/identity/data/invoice` --> http://schema.org/Invoice
+`/.well-know/identity/data/Invoice` ➜ http://schema.org/Invoice
 
-`/.well-know/identity/data/photograph` --> http://schema.org/Photograph
+`/.well-know/identity/data/Photograph` ➜ http://schema.org/Photograph
 
 The intent is to provide a known path for accessing standardized, semantic objects reliably across all containers, but do so in way that asserts as little opinion as possible. While deeper path taxonomies are helpful for some use-cases, we feel a path taxonomy is best left as a UI layer User Agents, apps, and services can overlay at their discretion.
+
+## Request/Response Format
+
+To maximize reuse of existing standards and open source projects, The REST API uses [JSON API's specification][2773b365] for request, response, and query formats, and leverages Schema.org's standard data set for encoding stored data and response objects. Requests should be formatted in accordance with the JSON API documentation: http://jsonapi.org/format/#fetching. Note: the `Accept` header parameter for requests should be set to `application/vnd.api+json`.
 
 #### Example Request
 
 Requests should be sent as `GET`, and the query's route should follow the common Identity Container Taxonomy. Here is an example of how to request an identity's music playlists:
 
-`/.well-know/identity/data/`*`musicplaylist`*
+`/.well-know/identity/data/`*`MusicPlaylist`*
 
 Requests will always return an array of all objects - *the user has given you access to* - of the related Schema.org type, via the response object's `data` property, as shown here:
 
@@ -45,7 +69,7 @@ Requests will always return an array of all objects - *the user has given you ac
   "@context": "http://schema.org",
   "@type": "MusicPlaylist",
   "name": "Classic Rock Playlist",
-  "numTracks": "2",
+  "numTracks": 2,
   "track": [{
       "@type": "MusicRecording",
       "byArtist": "Lynard Skynyrd",
