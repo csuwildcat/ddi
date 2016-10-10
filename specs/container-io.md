@@ -20,11 +20,24 @@ There are a handful of default, top-level endpoints that have defined meaning wi
 
 #### The Profile Object
 
-One universal object you can expect nearly every container to have is a `profile`. This is the owning entity's primary descriptor object. The object should be encoded in the format of whatever Schema.org type best represents the entity. Here is an example of an identity that represents a human being:
+One universal object you can expect nearly every container to have is a `profile`. This is the owning entity's primary descriptor object. The object should be encoded in the format of whatever Schema.org type best represents the entity. Here is an example of using the Schema.org `Person` schema to express that an identity is that of a human being:
 
 ```json
 {
-  "type": "@Person"
+    "@type": "Person",
+    "name": "Daniel Buchner",
+    "description": "Working on decentralize identity at Microsoft",
+    "website": [
+      {
+        "@type": "WebSite",
+        "url": "http://www.backalleycoder.com/"
+
+      }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Los Gatos, CA"      
+    }
 }
 ```
 
