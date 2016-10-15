@@ -42,7 +42,9 @@ One universal object you can expect nearly every container to have is a `profile
 
 #### Permissions
 
-All access and manipulation of identity data is subject to the permissions established by the owning entity. These permissions are declared in a JSON Document, which you can read more about in the documentation here: TBD. This access control document dictates what data the owning entity publicly exposes, as well as the permissions for Connections the entity creates with other entities across the web of identity, whether they are humans, apps, services, devices, etc.
+All access and manipulation of identity data is subject to the permissions established by the owning entity. Because the identities are self-sovereign, all data associated with the identity must be portable. Transfer of a container between environments and hosts should be seamless, without loss of data or operational state, including the permissions that govern access to identity data.
+
+These permissions are declared in a TBD, which you can read more about in the documentation here: TBD. This access control document dictates what data the owning entity publicly exposes, as well as the permissions for Connections the entity creates with other entities across the web of identity, whether they are humans, apps, services, devices, etc.
 
 #### Connections
 
@@ -108,7 +110,7 @@ Requests will always return an array of all objects - *the user has given you ac
 
 While the Identity Container spec does not mandate specific storage and search solutions, but for the purposes of interoperability and developer ergonomics containers must accept a common search and filtering syntax regardless of the underlying implementation.
 
-Please be sure to test your container implementations against the test harness to ensure it passes validation and is recognized as conforms to the requirements of the Identity Container spec.
+Current thinking is to use the common Apache Lucene query syntax to allow passage of string-based queries, as detailed in the Elastic Search docs: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
 
 
   [13f07ee0]: https://tools.ietf.org/html/rfc5785 "IETF well-know URIs"
