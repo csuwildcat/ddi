@@ -6,6 +6,10 @@ In order to maximize data interoperability and accessibility between identity co
 
 To enable both identity containers and existing severs of Web content to interact with the world of identity via the Identity Container APIs, we are using the IETF convention for globally defined resources that predictably reside at well known locations, as detailed in [RFC 5785 well-known URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-known` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-known/identity`.
 
+## Authentication
+
+The process of authenticating requests from the primary user or an agent shall follow the FIDO and Web Authentication specifications. These specifications may require modifications in order to support challenging globally known IDs with provably linked keys.
+
 ## API Routes
 
 There are a handful of default, top-level endpoints that have defined meaning within the system, those are:
@@ -14,7 +18,7 @@ There are a handful of default, top-level endpoints that have defined meaning wi
 
   `/.well-known/identity/`*`permissions`* ➜ The access control JSON document
 
-  `/.well-known/identity/`*`connections`* ➜ Scoped storage space for permitted external entities
+  `/.well-known/identity/`*`connections`* ➜ Scoped storage space for user-permitted external entities
 
   `/.well-known/identity/`*`data`* ➜ The owning entity's identity data (access limited)
 
