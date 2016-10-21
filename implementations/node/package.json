@@ -1,0 +1,15 @@
+{
+  "name": "node-identity-container",
+  "description": "Node implementation of Identity Containers",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/csuwildcat/ddi.git"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "express": "*",
+    "lokijs": "*"
+  }
+}

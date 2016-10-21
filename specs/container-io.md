@@ -14,13 +14,13 @@ The process of authenticating requests from the primary user or an agent shall f
 
 There are a handful of default, top-level endpoints that have defined meaning within the system, those are:
 
-  `/.well-known/identity/`*`profile`* ➜ The owning entity's primary descriptor object
+  `/.well-known/identity/`*`profile`* ➜ The owning entity's primary descriptor object, which can be an object from any schema.
 
   `/.well-known/identity/`*`permissions`* ➜ The access control JSON document
 
-  `/.well-known/identity/`*`connections`* ➜ Scoped storage space for user-permitted external entities
+  `/.well-known/identity/`*`stores`* ➜ Scoped storage space for user-permitted external entities
 
-  `/.well-known/identity/`*`data`* ➜ The owning entity's identity data (access limited)
+  `/.well-known/identity/`*`data/@context`* ➜ The owning entity's identity data (access limited)
 
 #### The Profile Object
 
@@ -28,6 +28,7 @@ One universal object you can expect nearly every container to have is a `profile
 
 ```json
 {
+    "@context": "http://schema.org",
     "@type": "Person",
     "name": "Daniel Buchner",
     "description": "Working on decentralize identity at Microsoft",
@@ -50,23 +51,23 @@ All access and manipulation of identity data is subject to the permissions estab
 
 These permissions are declared in a TBD, which you can read more about in the documentation here: TBD. This access control document dictates what data the owning entity publicly exposes, as well as the permissions for Connections the entity creates with other entities across the web of identity, whether they are humans, apps, services, devices, etc.
 
-#### Connections
+#### Stores
 
-Connections are other entities that are given permission to create, read, update, or delete identity data, as well as subscribe to a number of callback hooks. Connections are given an addressable data space within the owning identity's container under the `connections` top-level path, accessible within that path based on the entity's decentralize identifier or a recognized public key. Here's an example of the path format:
+Stores are areas of per-entity, scoped data storage in an identity container provided to any entity the user wishes to allow. Stores are addressable via the `/stores` top-level path, and keyed on the entity's decentralize identifier. Here's an example of the path format:
 
-`/.well-known/identity/connections/`*`ENTITY_ID_OR_PUBLIC_KEY`*
+`/.well-known/identity/stores/`*`ENTITY_ID`*
+
+The data shall be a JSON object and should be limited in size, with the option to expand the storage limit based on user discretion. Stores are not unlike a user-sovereign, entity-scoped version of the Web DOM's origin-scoped `window.localStorage` mechanism.
 
 #### Data
 
-The full scope of an identity's data is accessible via the following path `/.well-known/identity/data`, wherein the path structure is a flat map of object type names that is a 1:1 mirror of Schema.org's structured data schema. The names of the types are `PascalCased` on Schema.org, but container implementations should be *case insensitive*. Here are a few examples of actual paths and the type of Schema.org objects they will respond with:
+The full scope of an identity's data is accessible via the following path `/.well-known/identity/data/@context`, wherein the path structure is a 1:1 mirror of the schema context declared in the previous path segment. The intent is to provide a known path for accessing standardized, semantic objects reliably across all containers, but do so in way that asserts as little opinion as possible. The names of object types may be cased in various schema ontologies, but container implementations should always treat these paths as *case insensitive*. Here are a few examples of actual paths and the type of Schema.org objects they will respond with:
 
-`/.well-known/identity/data/Event` ➜ http://schema.org/Event
+`/.well-known/identity/data/schema.org/Thing/Event` ➜ http://schema.org/Event
 
-`/.well-known/identity/data/Invoice` ➜ http://schema.org/Invoice
+`/.well-known/identity/data/schema.org/Thing/Intangible/Invoice` ➜ http://schema.org/Invoice
 
-`/.well-known/identity/data/Photograph` ➜ http://schema.org/Photograph
-
-The intent is to provide a known path for accessing standardized, semantic objects reliably across all containers, but do so in way that asserts as little opinion as possible. While deeper path taxonomies are helpful for some use-cases, we feel a path taxonomy is best left as a UI layer User Agents, apps, and services can overlay at their discretion.
+`/.well-known/identity/data/schema.org/Thing/CreativeWork/Photograph` ➜ http://schema.org/Photograph
 
 ## Request/Response Format
 
@@ -76,14 +77,14 @@ To maximize reuse of existing standards and open source projects, The REST API u
 
 Requests should be sent as `GET`, and the query's route should follow the common Identity Container Taxonomy. Here is an example of how to request an identity's music playlists:
 
-`/.well-know/identity/data/`*`MusicPlaylist`*
+`/.well-know/identity/data/schema.org/CreativeWork/`*`MusicPlaylist`*
 
 Requests will always return an array of all objects - *the user has given you access to* - of the related Schema.org type, via the response object's `data` property, as shown here:
 
 ```json
 {
   "links": {
-    "self": "/.well-known/identity/data/musicplaylist"
+    "self": "/.well-known/identity/data/schema.org/CreativeWork/MusicPlaylist"
   },
   "data": [{
   "@context": "http://schema.org",
@@ -96,7 +97,7 @@ Requests will always return an array of all objects - *the user has given you ac
       "duration": "PT4M45S",
       "inAlbum": "Second Helping",
       "name": "Sweet Home Alabama",
-      "permit": "/.well-known/identity/data/permit/ced043360b99"
+      "permit": "/.well-known/identity/data/Intangible/Permit/ced043360b99"
     },
     {
       "@type": "MusicRecording",
@@ -104,7 +105,7 @@ Requests will always return an array of all objects - *the user has given you ac
       "duration": "PT3M12S",
       "inAlbum": "Stranger In Town",
       "name": "Old Time Rock and Roll",
-      "permit": "/.well-known/identity/data/permit/aa9f3ac9eb7a"
+      "permit": "/.well-known/identity/data/Intangible/permit/aa9f3ac9eb7a"
     }]
   }]
 }
