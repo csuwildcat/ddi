@@ -57,7 +57,7 @@ Stores are areas of per-entity, scoped data storage in an identity container pro
 
 `/.well-known/identity/stores/`*`ENTITY_ID`*
 
-The data shall be a JSON object and should be limited in size, with the option to expand the storage limit based on user discretion. Stores are not unlike a user-sovereign, entity-scoped version of the Web DOM's origin-scoped `window.localStorage` mechanism.
+The data shall be a JSON object and should be limited in size, with the option to expand the storage limit based on user discretion. Stores are not unlike a user-sovereign, entity-scoped version of the W3C DOM's origin-scoped `window.localStorage` API.
 
 #### Data
 
