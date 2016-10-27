@@ -1,4 +1,4 @@
-# Identity Container I/O
+# Identity Containers
 
 In order to maximize data interoperability and accessibility between identity containers, and other systems that will interact with identity data (crawlers, apps, etc.), it is important to create a globally recognized API based on a recognized query format that explicitly maps to semantic, expected data objects.
 
