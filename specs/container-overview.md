@@ -115,7 +115,7 @@ Requests will always return an array of all objects - *the user has given you ac
 
 The Identity Container spec does not mandate specific storage and search implementations, but for the purposes of interoperability and developer ergonomics containers must accept a common search and filtering syntax regardless of the underlying implementation choice.
 
-To avoid the introduction of a new syntax, we feel Apache Lucene's query filtering syntax balances the desire to select an option with broad, existing support, and the flexibility and expressiveness developers demand.
+To avoid the introduction of a new syntax, we feel [Apache Lucene's query filtering syntax](http://www.lucenetutorial.com/lucene-query-syntax.html) balances the desire to select an option with broad, existing support, and the flexibility and expressiveness developers demand.
 
 Filters can be applied via the `filter` parameter of your queries. Additionally, filters are used to enable more granular permissioning - see the ACL spec document for more info.
 
