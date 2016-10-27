@@ -23,11 +23,8 @@ dht.listen(20000, function () {
 
 dht.on('peer', function (peer, infoHash, from) {
   console.log(parsed.infoHash == infoHash);
-  console.log('found potential peer ' + peer.host + ':' + peer.port + ' through ' + from.address + ':' + from.port)
+  console.log('found potential peer ' + peer.host + ':' + peer.port + ' through ' + from.address + ':' + from.port);
 });
-
-dht.lookup(parsed.infoHash, function(error, ){})
-
 
 function getCollection(name){
   return db.getCollection(name) || db.addCollection(name)
