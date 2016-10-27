@@ -1,15 +1,33 @@
 
 var express = require('express');
 var loki = require('lokijs');
+var bittorrentDHT = require('bittorrent-dht');
+var magnet = require('magnet-uri');
+
+var wellKnown = '/.well-known/identity';
+var ownerID = 'dan.id'; // somehow securely init containers with a target ID
+
 
 var app = express();
 var db = new loki('identity.json', {
   autosave: true
 });
 
-var wellKnown = '/.well-known/identity';
-var ownerID = 'dan.id'; // figure out how to securely initalize
-                        // the container with the owner's ID
+var uri = 'magnet:?xt=urn:btih:identity.' + ownerID;
+var parsed = magnet(uri);
+var dht = new bittorrentDHT();
+
+dht.listen(20000, function () {
+  console.log('now listening');
+})
+
+dht.on('peer', function (peer, infoHash, from) {
+  console.log(parsed.infoHash == infoHash);
+  console.log('found potential peer ' + peer.host + ':' + peer.port + ' through ' + from.address + ':' + from.port)
+});
+
+dht.lookup(parsed.infoHash, function(error, ){})
+
 
 function getCollection(name){
   return db.getCollection(name) || db.addCollection(name)
@@ -45,12 +63,14 @@ app.get(wellKnown + '/permissions', (req, res) => {
   res.send('Print the permissions!');
 });
 
-app.get(wellKnown + '/connections', (req, res) => {
-  res.send('Print the connections!');
+app.get(wellKnown + '/stores', (req, res) => {
+  res.send('Print the stores!');
 });
 
-app.get(wellKnown + '/data/:type', (req, res) => {
+app.get(wellKnown + '/data/:schema/:type', (req, res) => {
   var type = req.params.type;
+  var schema = req.params.type;
+  console.log(type, schema);
   res.writeHead(200, {'Content-Type': 'application/json'});
   res.end(JSON.stringify({
     links: {
@@ -61,7 +81,6 @@ app.get(wellKnown + '/data/:type', (req, res) => {
 });
 
 app.listen(1337, '127.0.0.1');
-
 
 
 console.log('Server running at http://127.0.0.1:1337/');
