@@ -69,7 +69,7 @@ The full scope of an identity's data is accessible via the following path `/.wel
 
 `/.well-known/identity/data/schema.org/Thing/CreativeWork/Photograph` ➜ http://schema.org/Photograph
 
-## Request/Response Format
+## Request/Response
 
 To maximize reuse of existing standards and open source projects, The REST API uses [JSON API's specification][2773b365] for request, response, and query formats, and leverages Schema.org's standard data set for encoding stored data and response objects. Requests should be formatted in accordance with the JSON API documentation: http://jsonapi.org/format/#fetching. Note: the `Accept` header parameter for requests should be set to `application/vnd.api+json`.
 
