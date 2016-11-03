@@ -13,7 +13,7 @@ var db = new loki('identity.json', {
   autosave: true
 });
 
-var uri = 'magnet:?xt=urn:btih:identity.' + ownerID;
+var uri = 'magnet:?xt=urn:btih:identity' + ownerID ? '.' + ownerID : '';
 var parsed = magnet(uri);
 var dht = new bittorrentDHT();
 
@@ -30,7 +30,8 @@ function getCollection(name){
   return db.getCollection(name) || db.addCollection(name)
 }
 
-function verifyIdentity(id, request, resolve, reject){
+function verifyIdentity(request, resolve, reject){
+  //if ()
   resolve(true);
 }
 
@@ -49,7 +50,7 @@ app.post(wellKnown + '/profile', (req, res) => {
   console.log('POST /profile');
   new Promise((resolve, reject) => {
     // Verify identity owner
-    verifyIdentity(ownerID, req, resolve, reject);
+    verifyIdentity(req, resolve, reject);
   }).then((payload) => {
     console.log('UPDATED PROFILE');
     // data.update(profile)

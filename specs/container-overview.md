@@ -2,6 +2,8 @@
 
 In order to maximize data interoperability and accessibility between identity containers, and other systems that will interact with identity data (crawlers, apps, etc.), it is important to create a globally recognized API based on a recognized query format that explicitly maps to semantic, expected data objects.
 
+Thought the term Identity Container is a singular, an entity may have multiple instances of their identity container active across different devices and cloud providers. These instances sync identity state changes amongst each other, ensuring that the owning entity has access to vital identity data and attestations everywhere they go, even when offline.
+
 ## Well-Known URI
 
 To enable both identity containers and existing severs of Web content to interact with the world of identity via the Identity Container APIs, we are using the IETF convention for globally defined resources that predictably reside at well known locations, as detailed in [RFC 5785 well-known URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-known` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-known/identity`.
@@ -67,7 +69,13 @@ The full scope of an identity's data is accessible via the following path `/.wel
 
 ## Request/Response
 
-To maximize reuse of existing standards and open source projects, The REST API uses [JSON API's specification][2773b365] for request, response, and query formats, and leverages standard schemas for encoding stored data and response objects. Requests should be formatted in accordance with the JSON API documentation: http://jsonapi.org/format/#fetching. Note: the `Accept` header parameter for requests should be set to `application/vnd.api+json`.
+To maximize reuse of existing standards and open source projects, The REST API uses [JSON API's specification][2773b365] for request, response, and query formats, and leverages standard schemas for encoding stored data and response objects. Requests should be formatted in accordance with the JSON API documentation: http://jsonapi.org/format/#fetching. The `Accept` header parameter for requests should be set to `application/vnd.api+json`.
+
+The following headers should be included depending on the use-case:
+
+`X-Requesting-Identity` ➜ ID of the identity making the request to the container instance. The container may need to challenge the requester to prove the authenticity of the claim.
+
+`X-Target-Identity` ➜ ID corresponding with the identity the Requesting Identity would like to interface with. A container may manage multiple identities, so this is required to distinguish which is being addressed.
 
 #### Authentication
 
