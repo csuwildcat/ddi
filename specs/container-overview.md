@@ -2,11 +2,11 @@
 
 In order to maximize data interoperability and accessibility between identity containers, and other systems that will interact with identity data (crawlers, apps, etc.), it is important to create a globally recognized API based on a recognized query format that explicitly maps to semantic, expected data objects.
 
-Thought the term Identity Container is a singular, an entity may have multiple instances of their identity container active across different devices and cloud providers. These instances sync identity state changes amongst each other, ensuring that the owning entity has access to vital identity data and attestations everywhere they go, even when offline.
+Though the term Identity Container is a singular, an entity may have multiple instances of their identity container active across different devices and cloud providers. These instances sync identity state changes amongst each other, ensuring that the owning entity has access to vital identity data and attestations everywhere they go, even when offline.
 
 ## Well-Known URI
 
-To enable both identity containers and existing severs of Web content to interact with the world of identity via the Identity Container APIs, we are using the IETF convention for globally defined resources that predictably reside at well known locations, as detailed in [RFC 5785 well-known URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-known` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-known/identity`.
+To enable both identity containers and existing servers of Web content to interact with the world of identity via the Identity Container APIs, we are using the IETF convention for globally defined resources that predictably reside at well known locations, as detailed in [RFC 5785 well-known URIs][13f07ee0] and the [well-known URI directory][6cc282d2]. The `well-known` URI suffix shall be `identity`, thus identity containers are accessible via the path: `/.well-known/identity`.
 
 ## API Routes
 
